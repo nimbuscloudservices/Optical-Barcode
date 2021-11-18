@@ -1,25 +1,9 @@
-interface BarcodeIO
-{
-   boolean scan(BarcodeImage bc);
-
-   boolean readText(String text);
-
-   boolean generateImageFromText();
-
-   boolean translateImageToText();
-
-   void displayTextToConsole();
-
-   void displayImageToConsole();
-}
-
 /**
  * Optical Barcode Reader and Writer
  *
  * @author Blake, Layla, Saul, Yavik
  * @version 11-17-2021
  */
-
 public class OpticalBarcode
 {
    public static void main(String[] args)
@@ -100,34 +84,65 @@ class BarcodeImage implements Cloneable
    }
 
    /**
-    * Constructs
+    * Constructs a barcode object using strData which is a 1D array of strings
+    * and converts it to a 2D array of booleans
     *
-    * @param strData
+    * @param strData 1D array of strings to convert
     */
    public BarcodeImage(String[] strData)
    {
 
    }
 
-   boolean getPixel(int row, int col)
+   /**
+    * checks row and col values if they are within MAX height and width
+    *
+    * @param row in ImageData array
+    * @param col in ImageData array
+    * @return pixel value or false if error
+    */
+   public boolean getPixel(int row, int col)
    {
       return false;
    }
 
+   /**
+    * @param row   in ImageData array
+    * @param col   in ImageData array
+    * @param value that pixel is being set to
+    * @return true if pixel value is proper, false if it is not proper
+    */
    boolean setPixel(int row, int col, boolean value)
    {
       return false;
    }
 
-   private int checkSize(String[] data)
+   /**
+    * helper method that verifies string data does not exceed max values
+    *
+    * @param data that is being checked for size
+    * @return true if within max values, false if invalid
+    */
+   private boolean checkSize(String[] data)
    {
-      return 0;
+      return false;
    }
 
+   /**
+    * Displays contents of imageData in "*" or " "
+    *
+    * @return
+    */
    public String displayToConsole()
    {
       return null;
    }
+
+   /**
+    * clones the object
+    *
+    * @return cloned object
+    */
 
    public Object clone()
    {
@@ -321,4 +336,21 @@ class DataMatrix implements BarcodeIO
 
    }
 
+}
+/**
+ * Interface for Barcode Operations
+ */
+interface BarcodeIO
+{
+   boolean scan(BarcodeImage bc);
+
+   boolean readText(String text);
+
+   boolean generateImageFromText();
+
+   boolean translateImageToText();
+
+   void displayTextToConsole();
+
+   void displayImageToConsole();
 }
