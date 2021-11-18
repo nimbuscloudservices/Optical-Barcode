@@ -372,7 +372,6 @@ class DataMatrix implements BarcodeIO
     * Private method that lower left justifies incoming BarcodeImage This method
     * is called from within scan() and would move the signal to lower-left of
     * the larger 2D array.
-    * Uses heapl
     */
    private void cleanImage()
    {
@@ -423,7 +422,7 @@ class DataMatrix implements BarcodeIO
     */
    private boolean WriteCharToCol(int col, int code)
    {
-
+      return true;
    }
 
 }
