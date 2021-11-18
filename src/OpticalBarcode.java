@@ -76,7 +76,7 @@ class BarcodeImage implements Cloneable
    private boolean[][] imageData;
 
    /**
-    *
+    * Creates a basic BarcodeImage Object using maximum width and height.
     */
    public BarcodeImage()
    {
@@ -91,7 +91,9 @@ class BarcodeImage implements Cloneable
     */
    public BarcodeImage(String[] strData)
    {
-
+      /**
+       * This is going to be difficult
+       */
    }
 
    /**
@@ -99,22 +101,38 @@ class BarcodeImage implements Cloneable
     *
     * @param row in ImageData array
     * @param col in ImageData array
-    * @return pixel value or false if error
+    * @return true if pixel value or false if error
     */
    public boolean getPixel(int row, int col)
    {
-      return false;
+      if(row < 0 || row > MAX_HEIGHT || col < 0 || col > MAX_WIDTH)
+      {
+         return false;
+      }
+      else
+      {
+         return this.imageData[row][col];
+      }
    }
 
    /**
     * @param row   in ImageData array
     * @param col   in ImageData array
     * @param value that pixel is being set to
-    * @return true if pixel value is proper, false if it is not proper
+    * @return true if row/col value is proper and sets value, false if it is
+    * not proper
     */
-   boolean setPixel(int row, int col, boolean value)
+   public boolean setPixel(int row, int col, boolean value)
    {
-      return false;
+      if(row < 0 || row > MAX_HEIGHT || col < 0 || col > MAX_WIDTH)
+      {
+         return false;
+      }
+      else
+      {
+        this.imageData[row][col] = value;
+        return true;
+      }
    }
 
    /**
@@ -125,7 +143,8 @@ class BarcodeImage implements Cloneable
     */
    private boolean checkSize(String[] data)
    {
-      return false;
+      return data.length <= MAX_HEIGHT && data[0].length() <=
+            MAX_WIDTH && data != null;
    }
 
    /**
@@ -133,9 +152,24 @@ class BarcodeImage implements Cloneable
     *
     * @return
     */
-   public String displayToConsole()
+   public void displayToConsole()
    {
-      return null;
+      for (int i = 0; i < MAX_HEIGHT; i++)
+      {
+         System.out.print("|");
+         for (int j = 0; j < MAX_WIDTH; j++)
+         {
+            if((this.imageData[i][j]))
+            {
+               System.out.print("*");
+            }
+            else
+            {
+               System.out.print(" ");
+            }
+            System.out.println("|");
+         }
+      }
    }
 
    /**
@@ -181,38 +215,66 @@ class DataMatrix implements BarcodeIO
    /**
     * Constructor that sets the image but leaves the text at its default value.
     *
-    * @param image of
+    * @param image that is being scanned and set
     */
    public DataMatrix(BarcodeImage image)
    {
-
+      this();
+      scan(image);
    }
 
    /**
     * Constructor that sets the text but leaves the image at its default value.
     *
-    * @param text
+    * @param text that is being read and set
     */
    public DataMatrix(String text)
    {
+      this();
+      this.readText(text);
 
    }
 
    /**
     * A mutator for text
     *
-    * @param text
-    * @return
+    * @param text being read
+    * @return true if text is read
     */
    public boolean readText(String text)
    {
-      return false;
+      this.text = text;
+      return true;
+   }
+
+   /**
+    * Sets image, calls helper methods to computer actual width/height and
+    * catches cloning errors.
+    *
+    * @param image that is being scanned
+    * @return true if successfully clones image, false if not successful for
+    * no drama.
+    */
+   public boolean scan(BarcodeImage image)
+   {
+      try
+      {
+         this.image = (BarcodeImage) image.clone();
+         this.cleanImage();
+         this.actualWidth =  this.computeSignalWidth();
+         this.actualHeight = this.computerSignalHeight();
+         return true;
+      }
+      catch( Exception e)
+      {
+         return false;
+      }
    }
 
    /**
     * Generates image from text
     *
-    * @return true if succesful, false if not
+    * @return true if successful, false if not
     */
    @Override public boolean generateImageFromText()
    {
@@ -246,16 +308,23 @@ class DataMatrix implements BarcodeIO
    }
 
    /**
-    * Sets image, calls helper methods to computer actual width/height and
-    * catches cloning errors.
-    *
-    * @param image
-    * @return true if successfully clones image, false if not successful
+    * Displays full image data including blank top and right, useful for
+    * debugging
     */
-   public boolean scan(BarcodeImage image)
+   public void displayRawImage()
    {
-      return false;
+
    }
+
+   /**
+    * sets the image to white = false
+    */
+   private void clearImage()
+   {
+
+   }
+
+
 
    /**
     * Accessor for actualWidth
@@ -303,20 +372,20 @@ class DataMatrix implements BarcodeIO
     * Private method that lower left justifies incoming BarcodeImage This method
     * is called from within scan() and would move the signal to lower-left of
     * the larger 2D array.
+    * Uses heapl
     */
    private void cleanImage()
    {
-
+      this.moveImageToLowerLeft();
    }
 
    /**
-    * Aligns image to lower left.
+    * A helper method for cleanImage() Aligns image to lower left.
     */
    private void moveImageToLowerLeft()
    {
 
    }
-
    /**
     * Shifts image down
     *
@@ -324,6 +393,7 @@ class DataMatrix implements BarcodeIO
     */
    private void shiftImageDown(int offset)
    {
+
    }
 
    /**
@@ -332,6 +402,26 @@ class DataMatrix implements BarcodeIO
     * @param offset value that image needs to shift
     */
    private void shiftImageLeft(int offset)
+   {
+
+   }
+
+   /**
+    * Helper method to decode a char from a specific column
+    * @param col of dataMatrix
+    * @return decoded char
+    */
+   private char readCharFromCol(int col)
+   {
+      return '.';
+   }
+   /**
+    * Helper method to write and encode char to specific column
+    * @param col of dataMatrix
+    * @param code being written
+    * @return true if successful
+    */
+   private boolean WriteCharToCol(int col, int code)
    {
 
    }
