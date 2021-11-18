@@ -94,6 +94,7 @@ class BarcodeImage implements Cloneable
       /**
        * This is going to be difficult
        */
+
    }
 
    /**
@@ -149,8 +150,6 @@ class BarcodeImage implements Cloneable
 
    /**
     * Displays contents of imageData in "*" or " "
-    *
-    * @return
     */
    public void displayToConsole()
    {
@@ -180,7 +179,24 @@ class BarcodeImage implements Cloneable
 
    public Object clone()
    {
-      return null;
+      try
+      {
+        BarcodeImage clonedImage = (BarcodeImage) super.clone();
+        //cloning by copying inner data by looping through outer array
+        clonedImage.imageData = this.imageData.clone();
+         for (int i = 0; i < this.imageData.length; i++)
+         {
+            clonedImage.imageData[i] = this.imageData[i].clone();
+         }
+
+        return clonedImage;
+      }
+      catch(CloneNotSupportedException e)
+      {
+         e.printStackTrace();
+         throw new RuntimeException();
+      }
+
    }
 
 }
