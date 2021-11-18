@@ -172,7 +172,7 @@ class BarcodeImage implements Cloneable
    }
 
    /**
-    * clones the object
+    * clones the object, used ch 13.1 - figure 13.8 as an example.
     *
     * @return cloned object
     */
