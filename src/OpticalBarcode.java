@@ -94,57 +94,52 @@ class BarcodeImage implements Cloneable
       /**
        * This is going to be difficult
        */
-       int stringLength = strData.length;
-       int index = 0;
-       int quotient, remainder;
-       int [] convertASCII  = new int[strData.length];
+       this.imageData = new boolean[MAX_HEIGHT][MAX_WIDTH];
 
-       for(int i = 0; i < strData.length; i++)
-       {
-          convertASCII[i] = (int)strData[i].charAt(0);
-       }
+      int index=0;
+      int found=0;
 
-       while(index < stringLength)
-       {
-         quotient = convertASCII[index];
-         for(int i = MAX_HEIGHT-3 ; i > MAX_HEIGHT-11; i--)
+      for(int i=0; i<strData.length; i++)
+      {
+         if(strData[i].contains("*"))
          {
-            remainder = quotient%2;
-            quotient = quotient/2;
+            found++;
+         }
+      }
 
-            if(remainder == 1)
+      String[] tempString = new String [found];
+
+      for(int i=0; i < strData.length; i++)
+      {
+         if(strData[i].contains("*"))
+         {
+
+            tempString[index] = strData[i];
+            tempString[index] = tempString[index].substring(tempString[index].indexOf("*"), tempString[index].lastIndexOf(" "));
+
+            index++;
+         }
+      }
+
+      index = 0;
+
+      for(int j = MAX_HEIGHT-tempString.length; j < MAX_HEIGHT; j++)
+      {
+         for(int k = 0; k < tempString[index].length(); k++ )
+         {
+
+            if(tempString[index].charAt(k)=='*')
             {
-               imageData[i][index+2] = true;
+               this.imageData[j][k]= true;
+            }
+            else
+            {
+               this.imageData[j][k]= false;
             }
          }
          index++;
-       }
-
-       for(int i = MAX_HEIGHT-2 ; i > MAX_HEIGHT-12; i--)
-       {
-          for(int j=0; j< MAX_WIDTH; j++)
-          {
-             if(j == 1 && i > MAX_HEIGHT-11)
-             {
-                imageData[i][j] = true;
-             }
-             else if( (j >= 2 && j<=stringLength+1) && i == MAX_HEIGHT - 2)
-             {
-                imageData[i][j] = true;
-             }
-             else if((j > 1 && j<=stringLength+1) && i == 20)
-             {
-                if(j%2 == 0)
-                {
-                   imageData[i][j] = false;
-                }
-                else
-                {
-                   imageData[i][j] = true;
-                }
-             }
-          }
-       }
+      }
+      
    }
 
    /**
