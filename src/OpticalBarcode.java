@@ -94,7 +94,57 @@ class BarcodeImage implements Cloneable
       /**
        * This is going to be difficult
        */
+       int stringLength = strData.length;
+       int index = 0;
+       int quotient, remainder;
+       int [] convertASCII  = new int[strData.length];
 
+       for(int i = 0; i < strData.length; i++)
+       {
+          convertASCII[i] = (int)strData[i].charAt(0);
+       }
+
+       while(index < stringLength)
+       {
+         quotient = convertASCII[index];
+         for(int i = MAX_HEIGHT-3 ; i > MAX_HEIGHT-11; i--)
+         {
+            remainder = quotient%2;
+            quotient = quotient/2;
+
+            if(remainder == 1)
+            {
+               imageData[i][index+2] = true;
+            }
+         }
+         index++;
+       }
+
+       for(int i = MAX_HEIGHT-2 ; i > MAX_HEIGHT-12; i--)
+       {
+          for(int j=0; j< MAX_WIDTH; j++)
+          {
+             if(j == 1 && i > MAX_HEIGHT-11)
+             {
+                imageData[i][j] = true;
+             }
+             else if( (j >= 2 && j<=stringLength+1) && i == MAX_HEIGHT - 2)
+             {
+                imageData[i][j] = true;
+             }
+             else if((j > 1 && j<=stringLength+1) && i == 20)
+             {
+                if(j%2 == 0)
+                {
+                   imageData[i][j] = false;
+                }
+                else
+                {
+                   imageData[i][j] = true;
+                }
+             }
+          }
+       }
    }
 
    /**
