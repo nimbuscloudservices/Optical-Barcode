@@ -365,7 +365,23 @@ class DataMatrix implements BarcodeIO
     */
    @Override public void displayImageToConsole()
    {
+     for (int i = 30-this.actualHeight; i < 30; i++)
+     {
+         System.out.print("|");
+         for (int j = 0; j < actualWidth; j++)
+         {
+            if(image.getPixel(i, j))
+            {
+               System.out.print(BLACK_CHAR);
+            }
+            else
+            {
+               System.out.print(WHITE_CHAR);
+            }
 
+         }
+         System.out.println("|");
+     }
    }
 
    /**
@@ -374,7 +390,23 @@ class DataMatrix implements BarcodeIO
     */
    public void displayRawImage()
    {
+     for (int i = 0; i < 30; i++)
+      {
+         System.out.print("|");
+         for (int j = 0; j < 65; j++)
+         {
+            if(image.getPixel(i, j))
+            {
+               System.out.print(BLACK_CHAR);
+            }
+            else
+            {
+               System.out.print(WHITE_CHAR);
+            }
 
+         }
+         System.out.println("|");
+      }
    }
 
    /**
@@ -415,7 +447,16 @@ class DataMatrix implements BarcodeIO
     */
    private int computeSignalWidth()
    {
-      return 0;
+     int width = 0;
+     for(int i=0; i < 65; i++)
+     {
+        if(image.getPixel(30-1, i))
+        {
+           width++;
+        }
+     }
+
+     return width;
    }
 
    /**
@@ -426,7 +467,16 @@ class DataMatrix implements BarcodeIO
     */
    private int computerSignalHeight()
    {
-      return 0;
+     int height = 0;
+     for(int i=0; i < 30; i++)
+     {
+        if(image.getPixel(i, 0))
+        {
+           height++;
+        }
+     }
+
+     return height;
    }
 
    /**
