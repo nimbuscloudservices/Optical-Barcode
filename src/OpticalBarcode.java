@@ -139,7 +139,7 @@ class BarcodeImage implements Cloneable
          }
          index++;
       }
-      
+
    }
 
    /**
@@ -211,8 +211,8 @@ class BarcodeImage implements Cloneable
             {
                System.out.print(" ");
             }
-            System.out.println("|");
          }
+         System.out.println("|");
       }
    }
 
