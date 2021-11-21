@@ -557,6 +557,7 @@ class DataMatrix implements BarcodeIO
 
       boolean found = false;
 
+      //for loop to get the row and column of where the image starts.
       for(int i=0; i < BarcodeImage.MAX_HEIGHT; i++)
       {
          for(int j = 0; j < BarcodeImage.MAX_WIDTH; j ++)
@@ -574,7 +575,7 @@ class DataMatrix implements BarcodeIO
       }
 
 
-
+      //"stores" the asteriks and blanks onto tempImage
       for(int i = 0; i < computerSignalHeight(); i++)
       {
          for(int j=0; j < computeSignalWidth(); j++)
@@ -593,6 +594,7 @@ class DataMatrix implements BarcodeIO
          column=0;
       }
 
+      //test to see if tempimage is similar to image
       for (int i = 0; i < computerSignalHeight(); i++)
       {
           System.out.print("|");
@@ -613,9 +615,11 @@ class DataMatrix implements BarcodeIO
       row = 0;
       column = 0;
 
+      //clear main image
       System.out.println("ClearingImage()");
       clearImage();
 
+      //for loop to then set image to the left. 
       for(int i = BarcodeImage.MAX_HEIGHT-height; i < BarcodeImage.MAX_HEIGHT; i++)
       {
          for(int j = 0; j < width; j++)
