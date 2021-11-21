@@ -531,7 +531,24 @@ class DataMatrix implements BarcodeIO
     */
    private void moveImageToLowerLeft()
    {
-
+      int startRow = 0, startColumn = 0 , endRow = 0, endColumn = 0, int row
+         = 0;
+      boolean found = false;
+      while(found == false)
+      {
+         for (int col = 0; col < image.MAX_WIDTH; col++)
+         {
+            if(image.getPixel(row, col))
+            {
+               startRow = row;
+               startColumn = col;
+               found = true;
+               break;
+            }
+         }
+         row ++;
+      }
+// more to add
    }
    /**
     * Shifts image down
