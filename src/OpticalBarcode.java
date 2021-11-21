@@ -339,7 +339,40 @@ class DataMatrix implements BarcodeIO
     */
    @Override public boolean generateImageFromText()
    {
-      return false;
+      image = new BarcodeImage();
+
+      this.actualHeight = 10;
+      this.actualWidth = text.length() + 2;
+
+      for (int c = 0; c < actualWidth; c++)
+      {
+         if (c % 2 == 0)
+            image.setPixel(0, c ,true);
+      }
+
+      for (int r = 0; r < actualHeight; r++)
+      {
+         if (r % 2 == 0)
+            image.setPixel(r,0,true);
+      }
+
+      for (int i = 0; i < text.length(); i ++)
+      {
+         int asciiValue = text.charAt(i);
+         int value = 128;
+
+         while ( value > 0 )
+         {
+            if (asciiValue - value >=0)
+            {
+               WriteCharToCol(i + 1, value);
+               asciiValue -= value;
+            }
+            value /= 2;
+         }
+      }
+      cleanImage();
+      return true;
    }
 
    /**
@@ -349,7 +382,14 @@ class DataMatrix implements BarcodeIO
     */
    @Override public boolean translateImageToText()
    {
-      return false;
+      char[] textArray = new char[actualHeight - 2];
+
+      for (int c = 1; c < textArray.length + 1; c++)
+      {
+         textArray[c - 1] = readCharFromCol(c);
+      }
+      this.text = new String(textArray);
+      return true;
    }
 
    /**
@@ -357,7 +397,7 @@ class DataMatrix implements BarcodeIO
     */
    @Override public void displayTextToConsole()
    {
-
+      System.out.println(this.text);
    }
 
    /**
@@ -533,6 +573,16 @@ class DataMatrix implements BarcodeIO
     */
    private boolean WriteCharToCol(int col, int code)
    {
+      int value = 128;
+      int row = 1;
+
+      while (value >0)
+      {
+         if (code ==value)
+            image.setPixel(row, col, true);
+         value /=2;
+         row++;
+      }
       return true;
    }
 
