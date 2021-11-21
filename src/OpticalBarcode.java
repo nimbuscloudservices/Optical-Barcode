@@ -93,11 +93,7 @@ class BarcodeImage implements Cloneable
     */
    public BarcodeImage(String[] strData)
    {
-      /**
-       * This is going to be difficult
-       */
-       this.imageData = new boolean[MAX_HEIGHT][MAX_WIDTH];
-
+      this.imageData = new boolean[MAX_HEIGHT][MAX_WIDTH];
       int index=0;
       int found=0;
 
@@ -141,7 +137,6 @@ class BarcodeImage implements Cloneable
          }
          index++;
       }
-
    }
 
    /**
@@ -406,10 +401,10 @@ class DataMatrix implements BarcodeIO
     */
    @Override public void displayImageToConsole()
    {
-     for (int i = 30-this.actualHeight; i < 30; i++)
+     for (int i = BarcodeImage.MAX_HEIGHT-this.actualHeight; i < 30; i++)
      {
          System.out.print("|");
-         for (int j = 0; j < actualWidth; j++)
+         for (int j = 0; j < this.actualWidth; j++)
          {
             if(image.getPixel(i, j))
             {
@@ -419,7 +414,6 @@ class DataMatrix implements BarcodeIO
             {
                System.out.print(WHITE_CHAR);
             }
-
          }
          System.out.println("|");
      }
@@ -431,10 +425,10 @@ class DataMatrix implements BarcodeIO
     */
    public void displayRawImage()
    {
-     for (int i = 0; i < 30; i++)
+     for (int i = 0; i < BarcodeImage.MAX_HEIGHT; i++)
       {
          System.out.print("|");
-         for (int j = 0; j < 65; j++)
+         for (int j = 0; j < BarcodeImage.MAX_WIDTH; j++)
          {
             if(image.getPixel(i, j))
             {
@@ -454,7 +448,6 @@ class DataMatrix implements BarcodeIO
     * sets the image to white = false
     */
    private void clearImage()
-
    {
       for (int r = 0; r < BarcodeImage.MAX_HEIGHT - 1; r++)
       {
@@ -494,14 +487,13 @@ class DataMatrix implements BarcodeIO
    private int computeSignalWidth()
    {
      int width = 0;
-     for(int i=0; i < 65; i++)
+     for(int i=0; i < BarcodeImage.MAX_WIDTH; i++)
      {
-        if(image.getPixel(30-1, i))
+        if(image.getPixel(BarcodeImage.MAX_HEIGHT-1, i))
         {
            width++;
         }
      }
-
      return width;
    }
 
@@ -514,14 +506,13 @@ class DataMatrix implements BarcodeIO
    private int computerSignalHeight()
    {
      int height = 0;
-     for(int i=0; i < 30; i++)
+     for(int i=0; i < BarcodeImage.MAX_HEIGHT; i++)
      {
         if(image.getPixel(i, 0))
         {
            height++;
         }
      }
-
      return height;
    }
 
