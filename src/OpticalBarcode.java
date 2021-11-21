@@ -68,6 +68,7 @@ public class OpticalBarcode
       dm.displayImageToConsole();
       dm.displayRawImage();
 
+      System.out.println("testing git from intellij");
    }
 }
 
