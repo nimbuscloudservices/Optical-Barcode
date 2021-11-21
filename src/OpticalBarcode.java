@@ -66,6 +66,7 @@ public class OpticalBarcode
       dm.generateImageFromText();
       dm.displayTextToConsole();
       dm.displayImageToConsole();
+      dm.displayRawImage();
 
    }
 }
@@ -575,7 +576,7 @@ class DataMatrix implements BarcodeIO
       int asciiValue = 0;
       int value = 128;
 
-      for (int row = startRow + 1; row < startRow + actualHeight - 1; row++)
+      for (int row = startRow + 1; row < startRow + getActualHeight() - 1; row++)
       {
          if (image.getPixel(row, col))
             asciiValue += value;
