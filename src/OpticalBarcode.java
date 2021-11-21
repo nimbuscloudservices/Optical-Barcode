@@ -339,11 +339,10 @@ class DataMatrix implements BarcodeIO
     */
    @Override public boolean generateImageFromText()
    {
-      image = new BarcodeImage();
-
       this.actualHeight = 10;
       this.actualWidth = text.length() + 2;
-
+      this.cleanImage();
+      
       for (int c = 0; c < actualWidth; c++)
       {
          if (c % 2 == 0)
@@ -382,13 +381,11 @@ class DataMatrix implements BarcodeIO
     */
    @Override public boolean translateImageToText()
    {
-      char[] textArray = new char[actualHeight - 2];
+      String imageText = "  ";
+      for (int col = 1; col < getActualWidth() - 1; col++)
+         imageText += readCharFromCol(col);
 
-      for (int col = 1; col < textArray.length + 1; col++)
-      {
-         textArray[col - 1] = readCharFromCol(col);
-      }
-      this.text = new String(textArray);
+      this.text = imageText;
       return true;
    }
 
@@ -453,11 +450,16 @@ class DataMatrix implements BarcodeIO
     * sets the image to white = false
     */
    private void clearImage()
+
    {
-
+      for (int r = 0; r < BarcodeImage.MAX_HEIGHT - 1; r++)
+      {
+         for (int c = 0; c < BarcodeImage.MAX_WIDTH - 1; c++)
+         {
+            this.image.setPixel(r, c, false);
+         }
+      }
    }
-
-
 
    /**
     * Accessor for actualWidth
