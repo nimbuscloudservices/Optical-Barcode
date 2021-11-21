@@ -384,9 +384,9 @@ class DataMatrix implements BarcodeIO
    {
       char[] textArray = new char[actualHeight - 2];
 
-      for (int c = 1; c < textArray.length + 1; c++)
+      for (int col = 1; col < textArray.length + 1; col++)
       {
-         textArray[c - 1] = readCharFromCol(c);
+         textArray[col - 1] = readCharFromCol(col);
       }
       this.text = new String(textArray);
       return true;
@@ -563,7 +563,20 @@ class DataMatrix implements BarcodeIO
     */
    private char readCharFromCol(int col)
    {
-      return '.';
+      int startRow = 0;
+      while (!image.getPixel(startRow, 0))
+         startRow++;
+
+      int asciiValue = 0;
+      int value = 128;
+
+      for (int row = startRow + 1; row < startRow + actualHeight - 1; row++)
+      {
+         if (image.getPixel(row, col))
+            asciiValue += value;
+         value /=2;
+      }
+      return (char) asciiValue;
    }
    /**
     * Helper method to write and encode char to specific column
