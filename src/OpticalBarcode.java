@@ -66,6 +66,7 @@ public class OpticalBarcode
       dm.generateImageFromText();
       dm.displayTextToConsole();
       dm.displayImageToConsole();
+
    }
 }
 
@@ -342,17 +343,19 @@ class DataMatrix implements BarcodeIO
       this.actualHeight = 10;
       this.actualWidth = text.length() + 2;
       this.cleanImage();
-      
+
       for (int c = 0; c < actualWidth; c++)
       {
+         this.image.setPixel(BarcodeImage.MAX_HEIGHT - 1, c, true);
          if (c % 2 == 0)
-            image.setPixel(0, c ,true);
+            this.image.setPixel(BarcodeImage.MAX_HEIGHT - this.actualHeight, c, true);
       }
 
       for (int r = 0; r < actualHeight; r++)
       {
+         this.image.setPixel(BarcodeImage.MAX_HEIGHT - this.actualHeight + r, 0, true);
          if (r % 2 == 0)
-            image.setPixel(r,0,true);
+            this.image.setPixel(BarcodeImage.MAX_HEIGHT - this.actualHeight + r, this.actualWidth - 1, true);
       }
 
       for (int i = 0; i < text.length(); i ++)
