@@ -645,43 +645,40 @@ class DataMatrix implements BarcodeIO
         }
      }*/
 
-      int row = 0, column = 0;
-      int height = computeSignalHeight();
-      int width = computeSignalWidth();
-      //boolean[][] tempImage = new boolean[height][width];
-      boolean found = false;
+     int row = 0, column = 0, height = computeSignalHeight();
+     boolean found = false;
 
+     for (int i = 0; i < BarcodeImage.MAX_HEIGHT; i++)
+     {
+        for (int j = 0; j < BarcodeImage.MAX_WIDTH; j++)
+        {
+           if (!found)
+           {
+              if (image.getPixel(i, j))
+              {
+                 found = true;
+                 row = i;
+                 column = j;
+              }
+           }
+        }
+     }
 
+   row += computeSignalHeight();
 
-      for (int i = 0; i < BarcodeImage.MAX_HEIGHT; i++)
-      {
-         for (int j = 0; j < BarcodeImage.MAX_WIDTH; j++)
-         {
-            if (!found)
-            {
-               if (image.getPixel(i, j))
-               {
-                  found = true;
-                  row = i;
-                  column = j;
-               }
-            }
-         }
-      }
-    if((BarcodeImage.MAX_HEIGHT-computeSignalHeight())!= row && column == 0)
-    {
-       System.out.println("down by " + (BarcodeImage.MAX_HEIGHT - (row+computeSignalHeight())));
-       shiftImageDown(BarcodeImage.MAX_HEIGHT - (row+computeSignalHeight()));
-    }
-    else if((BarcodeImage.MAX_HEIGHT-computeSignalHeight())== row && column!=0)
-    {
-       shiftImageLeft(column);
-    }
-    else if((BarcodeImage.MAX_HEIGHT-computeSignalHeight())!= row && column !=0)
-    {
-       shiftImageLeft(column);
-       shiftImageDown(BarcodeImage.MAX_HEIGHT - (row+computeSignalHeight())-1);
-    }
+   if(BarcodeImage.MAX_HEIGHT!= row && column == 0)
+   {
+      shiftImageDown(BarcodeImage.MAX_HEIGHT-row);
+   }
+   else if(BarcodeImage.MAX_HEIGHT == row && column!=0)
+   {
+      shiftImageLeft(column);
+   }
+   else if(BarcodeImage.MAX_HEIGHT!= row && column !=0)
+   {
+      shiftImageLeft(column);
+      shiftImageDown(BarcodeImage.MAX_HEIGHT - row);
+   }
 
     /*
       for (int i = 0; i < height; i++)
