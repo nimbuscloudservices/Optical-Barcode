@@ -531,7 +531,7 @@ class DataMatrix implements BarcodeIO
     */
    private void moveImageToLowerLeft()
    {
-      int startRow = 0, startColumn = 0 , endRow = 0, endColumn = 0, int row
+      int startRow = 0, startColumn = 0 , endRow = 0, endColumn = 0, row
          = 0;
       boolean found = false;
       while(found == false)
@@ -648,7 +648,16 @@ class DataMatrix implements BarcodeIO
     */
    private void shiftImageDown(int offset)
    {
-
+      int currentRow = image.MAX_HEIGHT;
+      for(int row = offset; row >= 0; row--)
+      {
+         for(int col = 0; col <image.MAX_HEIGHT; col++)
+         {
+            image.setPixel(currentRow, col, image.getPixel(row,col));
+            image.setPixel(row, col,false);
+         }
+         currentRow --;
+      }
    }
 
    /**
@@ -658,6 +667,15 @@ class DataMatrix implements BarcodeIO
     */
    private void shiftImageLeft(int offset)
    {
+      int currentCol = offset;
+      for (int row = 0; row < image.MAX_HEIGHT; row++)
+      {
+         for (int col = 0; col < image.MAX_WIDTH; col++)
+         {
+            image.setPixel(row, currentCol - col, image.getPixel(row, col));
+            image.setPixel(row, col, false);
+         }
+      }
 
    }
 
