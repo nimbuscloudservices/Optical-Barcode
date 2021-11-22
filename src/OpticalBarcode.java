@@ -338,7 +338,7 @@ class DataMatrix implements BarcodeIO
          this.image = (BarcodeImage) image.clone();
          this.cleanImage();
          this.actualWidth =  this.computeSignalWidth();
-         this.actualHeight = this.computerSignalHeight();
+         this.actualHeight = this.computeSignalHeight();
          return true;
       }
       catch( Exception e)
@@ -556,7 +556,7 @@ class DataMatrix implements BarcodeIO
     *
     * @return calculated actualHeight
     */
-   private int computerSignalHeight()
+   private int computeSignalHeight()
    {
      int height = 0;
      for(int i=0; i < BarcodeImage.MAX_HEIGHT; i++)
