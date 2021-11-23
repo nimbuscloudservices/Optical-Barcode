@@ -93,52 +93,60 @@ class BarcodeImage implements Cloneable
     */
    public BarcodeImage(String[] strData)
    {
-      this.imageData = new boolean[MAX_HEIGHT][MAX_WIDTH];
-      int index = 0;
-      int found = 0;
+     this.imageData = new boolean[MAX_HEIGHT][MAX_WIDTH];
 
-      for (int i = 0; i < strData.length; i++)
-      {
-         if (strData[i].contains("*"))
-         {
-            found++;
-         }
-      }
+     if(checkSize(strData))
+     {
+        int index = 0;
+        int found = 0;
 
-      String[] tempString = new String[found];
+        for (int i = 0; i < strData.length; i++)
+        {
+           if (strData[i].contains("*"))
+           {
+              found++;
+           }
+        }
 
-      for (int i = 0; i < strData.length; i++)
-      {
-         if (strData[i].contains("*"))
-         {
+        String[] tempString = new String[found];
 
-            tempString[index] = strData[i];
-            tempString[index] = tempString[index].substring(
-                  tempString[index].indexOf("*"),
-                  tempString[index].lastIndexOf(" "));
+        for (int i = 0; i < strData.length; i++)
+        {
+           if (strData[i].contains("*"))
+           {
 
-            index++;
-         }
-      }
+              tempString[index] = strData[i];
+              tempString[index] = tempString[index].substring(
+                    tempString[index].indexOf("*"),
+                    tempString[index].lastIndexOf(" "));
 
-      index = 0;
+              index++;
+           }
+        }
 
-      for (int j = MAX_HEIGHT - tempString.length; j < MAX_HEIGHT; j++)
-      {
-         for (int k = 0; k < tempString[index].length(); k++)
-         {
+        index = 0;
 
-            if (tempString[index].charAt(k) == '*')
-            {
-               this.imageData[j][k] = true;
-            }
-            else
-            {
-               this.imageData[j][k] = false;
-            }
-         }
-         index++;
-      }
+        for (int j = MAX_HEIGHT - tempString.length; j < MAX_HEIGHT; j++)
+        {
+           for (int k = 0; k < tempString[index].length(); k++)
+           {
+
+              if (tempString[index].charAt(k) == '*')
+              {
+                 this.imageData[j][k] = true;
+              }
+              else
+              {
+                 this.imageData[j][k] = false;
+              }
+           }
+           index++;
+        }
+     }
+     else
+     {
+        System.out.println("Error: Height and width of String does not meet the requirements.");
+     }
    }
 
    /**
@@ -678,7 +686,7 @@ class DataMatrix implements BarcodeIO
    {
       shiftImageLeft(column);
    }
-   //else if calls shiftImageLeft if the image just needs to be moved all the way to the left and all the way down. 
+   //else if calls shiftImageLeft if the image just needs to be moved all the way to the left and all the way down.
    else if(BarcodeImage.MAX_HEIGHT!= row && column !=0)
    {
       shiftImageLeft(column);
