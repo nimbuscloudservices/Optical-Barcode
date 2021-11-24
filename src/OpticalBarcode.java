@@ -384,7 +384,7 @@ class DataMatrix implements BarcodeIO
       {
          if(r % 2 == 0)
             image.setPixel(r, actualWidth - 1, true);
-         image.setPixel(0 + r, 0, true);
+         image.setPixel(r, 0, true);
       }
 
       for (int i = 0; i < text.length(); i++)
