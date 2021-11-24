@@ -599,7 +599,7 @@ class DataMatrix implements BarcodeIO
     */
     private void moveImageToLowerLeft()
     {
-      int row = 0, column = 0, height = computeSignalHeight();
+      int row = 0, column = 0;
       boolean found = false;
 
       for (int i = 0; i < BarcodeImage.MAX_HEIGHT; i++)
