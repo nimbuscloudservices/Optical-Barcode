@@ -405,6 +405,7 @@ class DataMatrix implements BarcodeIO
             value /= 2;
          }
       }
+      cleanImage();
       return true;
    }
 
