@@ -604,7 +604,6 @@ class DataMatrix implements BarcodeIO
       int row = 0, column = 0, height = computeSignalHeight();
       boolean found = false;
 
-      //For loop looks for where the image starts (first * on the far top left)
       for (int i = 0; i < BarcodeImage.MAX_HEIGHT; i++)
       {
          for (int j = 0; j < BarcodeImage.MAX_WIDTH; j++)
@@ -621,20 +620,16 @@ class DataMatrix implements BarcodeIO
          }
       }
 
-      //row contains the number of where the last star is on the bottom right.
       row += computeSignalHeight();
 
-      //if calls shiftImageDown if the image just needs to be moved all the way down.
       if(BarcodeImage.MAX_HEIGHT!= row && column == 0)
       {
          shiftImageDown(BarcodeImage.MAX_HEIGHT-row);
       }
-      //else if calls shiftImageLeft if the image just needs to be moved all the way to the left
       else if(BarcodeImage.MAX_HEIGHT == row && column!=0)
       {
          shiftImageLeft(column);
       }
-      //else if calls shiftImageLeft if the image just needs to be moved all the way to the left and all the way down.
       else if(BarcodeImage.MAX_HEIGHT!= row && column !=0)
       {
          shiftImageLeft(column);
@@ -649,18 +644,19 @@ class DataMatrix implements BarcodeIO
     */
    private void shiftImageDown(int offset)
    {
-      int currentRow = BarcodeImage.MAX_HEIGHT-1;
-      boolean temp;
-      for (int row = offset; row >= 0; row--)
-      {
-         for (int col = 0; col < BarcodeImage.MAX_WIDTH; col++)
-         {
-            temp = image.getPixel(row, col);
-            image.setPixel(currentRow, col, temp);
-            image.setPixel(row, col, false);
-         }
-         currentRow--;
-      }
+     int currentRow = BarcodeImage.MAX_HEIGHT-offset;
+     boolean temp;
+
+     for (int i = BarcodeImage.MAX_HEIGHT; i >=this.actualHeight; i--)
+     {
+        for (int col = 0; col < BarcodeImage.MAX_WIDTH; col++)
+        {
+           temp = image.getPixel(currentRow, col);
+           image.setPixel(i, col, temp);
+           image.setPixel(currentRow, col, false);
+        }
+        currentRow--;
+     }
    }
 
    /**
