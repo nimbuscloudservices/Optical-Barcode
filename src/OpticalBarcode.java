@@ -375,18 +375,16 @@ class DataMatrix implements BarcodeIO
 
       for (int c = 0; c < actualWidth; c++)
       {
-         image.setPixel(BarcodeImage.MAX_HEIGHT - 1, c, true);
+         image.setPixel(this.actualHeight, c, true);
          if(c % 2 == 0)
             image.setPixel(0, c, true);
-         image.setPixel(BarcodeImage.MAX_HEIGHT - this.actualHeight, c, true);
       }
 
       for (int r = 0; r < actualHeight; r++)
       {
-         image.setPixel(BarcodeImage.MAX_HEIGHT - this.actualHeight + r, 0, true);
          if(r % 2 == 0)
             image.setPixel(r, actualWidth - 1, true);
-         image.setPixel(r, 0, true);
+         image.setPixel(0 + r, 0, true);
       }
 
       for (int i = 0; i < text.length(); i++)
