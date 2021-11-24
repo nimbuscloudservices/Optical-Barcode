@@ -371,7 +371,6 @@ class DataMatrix implements BarcodeIO
    {
       this.actualHeight = 10;
       this.actualWidth = text.length() + 2;
-      this.cleanImage();
 
       for (int c = 0; c < actualWidth; c++)
       {
